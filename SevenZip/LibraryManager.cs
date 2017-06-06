@@ -486,21 +486,23 @@ namespace SevenZip
 #elif !MONO
                     	NativeMethods.CreateCOMObject(ref classID, ref interfaceId, out result);
 #else
-						result = SevenZip.Mono.Factory.CreateInterface<IInArchive>(user, classID, interfaceId);
+                        result = SevenZip.Mono.Factory.CreateInterface<IInArchive>(user, classID, interfaceId);
 #endif
                     }
                     catch (Exception)
                     {
                         throw new SevenZipLibraryException("Your 7-zip library does not support this archive type.");
                     }
-                    InitUserInFormat(user, format);									
+                    InitUserInFormat(user, format);
                     _inArchives[user][format] = result as IInArchive;
                 }
                 return _inArchives[user][format];
 #if !WINCE && !MONO
             }
+#else
+            }
 #endif
-        }
+            }
 
 #if COMPRESS
         /// <summary>
@@ -547,7 +549,7 @@ namespace SevenZip
 #elif !MONO
                     	NativeMethods.CreateCOMObject(ref classID, ref interfaceId, out result);
 #else
-						result = SevenZip.Mono.Factory.CreateInterface<IOutArchive>(classID, interfaceId, user);
+                        result = SevenZip.Mono.Factory.CreateInterface<IOutArchive>(classID, interfaceId, user);
 #endif
                     }
                     catch (Exception)
@@ -560,9 +562,11 @@ namespace SevenZip
                 return _outArchives[user][format];
 #if !WINCE && !MONO
             }
+#elif MONO
+            }
 #endif
 
-        }
+			}
 #endif
 #if !WINCE && !MONO
         public static void SetLibraryPath(string libraryPath)

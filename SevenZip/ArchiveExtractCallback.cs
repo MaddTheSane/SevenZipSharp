@@ -295,18 +295,10 @@ namespace SevenZip
         /// <param name="askExtractMode">Extraction mode</param>
         /// <returns>0 if OK</returns>
         public int GetStream(uint index, out 
-#if !MONO
 		                     ISequentialOutStream
-#else
-		                     HandleRef
-#endif
 		                     outStream, AskMode askExtractMode)
         {
-#if !MONO
             outStream = null;
-#else
-			outStream = new System.Runtime.InteropServices.HandleRef(null, IntPtr.Zero);		
-#endif			
             if (Canceled)
             {
                 return -1;
@@ -404,11 +396,7 @@ namespace SevenZip
                                 }
                                 if (String.IsNullOrEmpty(fnea.FileName))
                                 {
-#if !MONO
                                     outStream = _fakeStream;
-#else
-									outStream = _fakeStream.Handle;								
-#endif
                                     goto FileExtractionStartedLabel;
                                 }
                                 fileName = fnea.FileName;

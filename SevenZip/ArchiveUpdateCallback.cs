@@ -635,11 +635,7 @@ namespace SevenZip
         /// <param name="inStream">Input file stream</param>
         /// <returns>Zero if Ok</returns>
         public int GetStream(uint index, out 
-#if !MONO
 		                     ISequentialInStream
-#else
-		                     HandleRef
-#endif
 		                     inStream)
         {
             index -= _indexOffset;
